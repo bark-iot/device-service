@@ -1,0 +1,4 @@
+site_name: Houses Service
+theme: readthedocs
+site_dir: ../public/houses/docs
+repo_url: https://github.com/bark-iot/house-service/
