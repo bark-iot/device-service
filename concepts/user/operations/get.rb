@@ -1,6 +1,6 @@
 require 'rest-client'
 
-class House
+class User
   class Get < Trailblazer::Operation
     extend Contract::DSL
 
@@ -11,20 +11,18 @@ class House
     failure  :log_failure
 
     contract do
-      property :id, virtual: true
       property :authorization_header, virtual: true
 
       validation do
-        required(:id).filled
         required(:authorization_header).filled
       end
     end
 
     def model!(options, params:, **)
       begin
-        response = RestClient.get("http://lb/houses/#{params[:id]}", headers={'Authorization' => params[:authorization_header]})
-      rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::UnprocessableEntity, RestClient::NotFound => err
-        return false
+        response = RestClient.get('http://lb/users/by_token', headers={'Authorization' => params[:authorization_header]})
+      rescue RestClient::Unauthorized, RestClient::Forbidden, RestClient::UnprocessableEntity => err
+          return false
       else
         options['model'] = JSON.parse(response.body)
         return true
@@ -32,11 +30,11 @@ class House
     end
 
     def log_success(options, params:, model:, **)
-      LOGGER.info "[#{self.class}] Found house with params #{params.to_json}. House: #{options['model'].to_s}"
+      LOGGER.info "[#{self.class}] Found user with params #{params.to_json}. User: #{options['model'].to_s}"
     end
 
     def log_failure(options, params:, **)
-      LOGGER.info "[#{self.class}] Failed to find house with params #{params.to_json}"
+      LOGGER.info "[#{self.class}] Failed to find user with params #{params.to_json}"
     end
   end
 end

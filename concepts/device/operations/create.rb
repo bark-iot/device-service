@@ -1,25 +1,25 @@
 require 'securerandom'
 
-class House < Sequel::Model(DB)
+class Device < Sequel::Model(DB)
   class Create < Trailblazer::Operation
     extend Contract::DSL
 
-    step Model(House, :new)
+    step Model(Device, :new)
     step Contract::Build()
     step Contract::Validate()
-    step :generate_key_and_secret
+    step :generate_token
     step :set_timestamps
     step Contract::Persist()
     step :log_success
     failure  :log_failure
 
     contract do
-      property :user_id
+      property :house_id
       property :title
-      property :address
+      property :com_type
 
       validation do
-        required(:user_id).filled
+        required(:house_id).filled
         required(:title).filled
       end
     end
@@ -30,18 +30,16 @@ class House < Sequel::Model(DB)
       model.updated_at = timestamp
     end
 
-    def generate_key_and_secret(options, model:, **)
-      model.key = SecureRandom.uuid
-      model.secret = SecureRandom.hex(32)
+    def generate_token(options, model:, **)
+      model.token = SecureRandom.uuid
     end
 
-
     def log_success(options, params:, model:, **)
-      LOGGER.info "[#{self.class}] Created house with params #{params.to_json}. House: #{House::Representer.new(model).to_json}"
+      LOGGER.info "[#{self.class}] Created device with params #{params.to_json}. Device: #{Device::Representer.new(model).to_json}"
     end
 
     def log_failure(options, params:, **)
-      LOGGER.info "[#{self.class}] Failed to create house with params #{params.to_json}"
+      LOGGER.info "[#{self.class}] Failed to create device with params #{params.to_json}"
     end
   end
 end

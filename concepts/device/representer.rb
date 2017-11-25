@@ -10,7 +10,9 @@ class Device < Sequel::Model(DB)
       property :title
       property :token
       property :com_type
-      property :approved
+      property :approved_at
       property :online
+      property :created_at
+      property :updated_at
   end
 end

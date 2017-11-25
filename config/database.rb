@@ -11,7 +11,7 @@ configure do
 end
 
 configure :test do
-  test_db_name = 'house_service_test'
+  test_db_name = 'device_service_test'
   Sequel.extension :migration
   DB.execute "DROP DATABASE IF EXISTS #{test_db_name}"
   DB.execute "CREATE DATABASE #{test_db_name}"

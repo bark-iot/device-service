@@ -1,4 +1,4 @@
-class CreateTableHouses < Sequel::Migration
+class CreateTableDevices < Sequel::Migration
   def up
     create_table :devices do
       primary_key :id
@@ -14,6 +14,6 @@ class CreateTableHouses < Sequel::Migration
   end
 
   def down
-    drop_table :houses
+    drop_table :devices
   end
 end

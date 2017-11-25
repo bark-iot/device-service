@@ -1,4 +1,4 @@
-# Houses Service
+# Devices Service
 
 For full Bark documentation visit [http://localhost/docs](http://localhost/docs).
 
@@ -7,27 +7,35 @@ For full Bark documentation visit [http://localhost/docs](http://localhost/docs)
 To perform any requests you need to send user token via `Authorization` header. Example:
 `Authorization: Bearer <token>`.
 
-## Create House
+## Create Device
 
-POST `/houses`
+POST `/houses/:house_id/devices`
+
+*PATH parameters*
+
+Name         | Validation
+------------ | ------------- 
+house_id     | required
+
 
 *POST parameters*
 
-Name         | Validation
------------- | -------------
-address      | optional 
-title        | required
+Name          | Validation
+------------  | -------------
+com_type      | optional 
+title         | required
 
 *Response [200]*
 
 ```json
 {
   "id": 1,
-  "user_id": 1,
-  "title": "MyHouse",
-  "address": "Baker Street 221B",
-  "key": "2d931510-d99f-494a-8c67-87feb05e1594",
-  "secret": "cd8a74e54129e64172fe692526dfb4c9641639e95ac48e91c0d3be2c03a32e5c",
+  "house_id": 1,
+  "title": "MyDevice",
+  "com_type": 0,
+  "token": "2d931510-d99f-494a-8c67-87feb05e1594",
+  "online":false,
+  "approved_at": "2017-11-11 11:04:44 UTC",
   "created_at": "2017-11-11 11:04:44 UTC",
   "updated_at": "2017-1-11 11:04:44 UTC"
 }
@@ -45,11 +53,11 @@ title        | required
 
 Wrong user token
 
-## Update House
+## Update Device
 
 PUT `/houses/:id`
 
-*GET parameters*
+*PATH parameters*
 
 Name         | Validation
 ------------ | ------------- 

@@ -1,6 +1,6 @@
 require 'securerandom'
 
-class House < Sequel::Model(DB)
+class Device < Sequel::Model(DB)
   class Delete < Trailblazer::Operation
     extend Contract::DSL
 
@@ -12,16 +12,16 @@ class House < Sequel::Model(DB)
 
     contract do
       property :id, virtual: true
-      property :user_id, virtual: true
+      property :house_id, virtual: true
 
       validation do
         required(:id).filled
-        required(:user_id).filled
+        required(:house_id).filled
       end
     end
 
     def delete(options, params:, **)
-      options['model'] = House.where(id: params[:id]).where(user_id: params[:user_id]).first
+      options['model'] = Device.where(id: params[:id]).where(house_id: params[:house_id]).first
       return false unless options['model']
       options['model'].destroy
     end
@@ -31,11 +31,11 @@ class House < Sequel::Model(DB)
 
 
     def log_success(options, params:, **)
-      LOGGER.info "[#{self.class}] Deleted house with params #{params.to_json}."
+      LOGGER.info "[#{self.class}] Deleted device with params #{params.to_json}."
     end
 
     def log_failure(options, params:, **)
-      LOGGER.info "[#{self.class}] Failed to delete house with params #{params.to_json}"
+      LOGGER.info "[#{self.class}] Failed to delete device with params #{params.to_json}"
     end
   end
 end
