@@ -55,30 +55,34 @@ Wrong user token
 
 ## Update Device
 
-PUT `/houses/:id`
+PUT `/houses/:house_id/devices/:id`
 
 *PATH parameters*
 
 Name         | Validation
 ------------ | ------------- 
+house_id     | required
 id           | required
 
-*PUT parameters*
 
-Name         | Validation
------------- | -------------
-address      | optional 
-title        | required
+*POST parameters*
+
+Name          | Validation
+------------  | -------------
+com_type      | optional 
+title         | required
 
 *Response [200]*
 
 ```json
 {
   "id": 1,
-  "user_id": 1,
-  "title": "MyHouse",
-  "address": "Baker Street 221B",
-  "key": "2d931510-d99f-494a-8c67-87feb05e1594",
+  "house_id": 1,
+  "title": "MyDevice",
+  "com_type": 0,
+  "token": "2d931510-d99f-494a-8c67-87feb05e1594",
+  "online":false,
+  "approved_at": "2017-11-11 11:04:44 UTC",
   "created_at": "2017-11-11 11:04:44 UTC",
   "updated_at": "2017-1-11 11:04:44 UTC"
 }
@@ -96,9 +100,15 @@ title        | required
 
 Wrong user token
 
-## List Houses
+## List Devices
 
-GET `/houses`
+GET `/houses/:house_id/devices`
+
+*PATH parameters*
+
+Name         | Validation
+------------ | ------------- 
+house_id     | required
 
 *Response [200]*
 
@@ -106,10 +116,12 @@ GET `/houses`
 [
     {
       "id": 1,
-      "user_id": 1,
-      "title": "MyHouse",
-      "address": "Baker Street 221B",
-      "key": "2d931510-d99f-494a-8c67-87feb05e1594",
+      "house_id": 1,
+      "title": "MyDevice",
+      "com_type": 0,
+      "token": "2d931510-d99f-494a-8c67-87feb05e1594",
+      "online":false,
+      "approved_at": "2017-11-11 11:04:44 UTC",
       "created_at": "2017-11-11 11:04:44 UTC",
       "updated_at": "2017-1-11 11:04:44 UTC"
     }
@@ -120,14 +132,16 @@ GET `/houses`
 
 No token provided
 
-## Delete House
+## Delete Device
 
-DELETE `/houses/:id`
+DELETE `/houses/:house_id/devices/:id`
 
-*GET parameters*
+
+*PATH parameters*
 
 Name         | Validation
 ------------ | ------------- 
+house_id     | required
 id           | required
 
 *Response [200]*
