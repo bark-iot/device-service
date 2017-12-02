@@ -25,6 +25,9 @@ gem 'thor'
 # Network
 gem 'rest-client'
 
+# Redis
+gem 'redis'
+
 group :test, :development do
   gem 'pry'
 end

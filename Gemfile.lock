@@ -80,6 +80,7 @@ GEM
       rack
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
+    redis (4.0.1)
     reform (2.2.4)
       disposable (>= 0.4.1)
       representable (>= 2.4.0, < 3.1.0)
@@ -152,6 +153,7 @@ DEPENDENCIES
   pg
   pry
   rack-test
+  redis
   rest-client
   roar!
   rspec
