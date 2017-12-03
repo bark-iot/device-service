@@ -4,6 +4,7 @@ require 'roar/json'
 class Device < Sequel::Model(DB)
   class Representer < Roar::Decorator
       include Roar::JSON
+      defaults render_nil: true
 
       property :id
       property :house_id
