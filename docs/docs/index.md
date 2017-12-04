@@ -100,6 +100,52 @@ title         | required
 
 Wrong user token
 
+## Approve Device
+
+POST `/houses/:house_id/devices/:id/approved`
+
+*PATH parameters*
+
+Name         | Validation
+------------ | ------------- 
+house_id     | required
+id           | required
+
+
+*POST parameters*
+
+Name          | Validation
+------------  | -------------
+approved      | optional 
+
+*Response [200]*
+
+```json
+{
+  "id": 1,
+  "house_id": 1,
+  "title": "MyDevice",
+  "com_type": 0,
+  "token": "2d931510-d99f-494a-8c67-87feb05e1594",
+  "online":false,
+  "approved_at": "2017-11-11 11:04:44 UTC",
+  "created_at": "2017-11-11 11:04:44 UTC",
+  "updated_at": "2017-1-11 11:04:44 UTC"
+}
+```
+
+*Error Response [422]*
+
+```json
+[
+  ["approved", ["must be filled"]]
+]
+```
+
+*Error Response [401]*
+
+Wrong user token
+
 ## List Devices
 
 GET `/houses/:house_id/devices`

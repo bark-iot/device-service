@@ -68,6 +68,20 @@ namespace '/houses/:house_id' do
     end
   end
 
+  post '/devices/:id/approved' do
+    result = Device::Approve.(params)
+    if result.success?
+      body Device::Representer.new(result['model']).to_json
+    else
+      if result['contract.default']
+        status 422
+        body result['contract.default'].errors.messages.uniq.to_json
+      else
+        status 404
+      end
+    end
+  end
+
   delete '/devices/:id' do
     result = Device::Delete.(params)
     if result.success?

@@ -125,6 +125,26 @@ describe 'Devices Service' do
     expect(last_response.status).to equal(401)
   end
 
+  it 'should approve device for house' do
+    header 'Authorization', "Bearer #{token}"
+    post "/houses/1/devices/#{device.id}/approved", {approved: true}
+
+    expect(last_response).to be_ok
+    body = JSON.parse(last_response.body)
+    expect(body['title']).to eql('MyDevice')
+    expect(body['approved_at'] != nil).to be_truthy
+  end
+
+  it 'should disapprove device for house' do
+    header 'Authorization', "Bearer #{token}"
+    post "/houses/1/devices/#{device.id}/approved", {approved: false}
+
+    expect(last_response).to be_ok
+    body = JSON.parse(last_response.body)
+    expect(body['title']).to eql('MyDevice')
+    expect(body['approved_at'] == nil).to be_truthy
+  end
+
   it 'should delete device for house' do
     device_id = device.id
     header 'Authorization', "Bearer #{token}"
