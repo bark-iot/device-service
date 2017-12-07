@@ -10,6 +10,7 @@ class Device < Sequel::Model(DB)
     step :generate_token
     step :set_timestamps
     step Contract::Persist()
+    step :notify
     step :log_success
     failure  :log_failure
 
@@ -28,6 +29,10 @@ class Device < Sequel::Model(DB)
       timestamp = Time.now
       model.created_at = timestamp
       model.updated_at = timestamp
+    end
+
+    def notify(options, params:, model:, **)
+      REDIS.publish 'devices', {type: 'created', device: model.values}.to_json
     end
 
     def generate_token(options, model:, **)

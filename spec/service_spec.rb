@@ -20,6 +20,8 @@ describe 'Devices Service' do
         to_return(status: 404, body: '', headers: {})
   end
 
+  #TODO: add delete house test
+
   it 'should show device for house' do
     header 'Authorization', "Bearer #{token}"
     get "/houses/1/devices/#{device.id}"

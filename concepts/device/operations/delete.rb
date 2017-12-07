@@ -7,6 +7,7 @@ class Device < Sequel::Model(DB)
     step Contract::Build()
     step Contract::Validate()
     step :delete
+    step :notify
     step :log_success
     failure  :log_failure
 
@@ -26,9 +27,9 @@ class Device < Sequel::Model(DB)
       options['model'].destroy
     end
 
-    step :log_success
-    failure  :log_failure
-
+    def notify(options, params:, **)
+      REDIS.publish 'devices', {type: 'deleted', device: {id: params[:id]}}.to_json
+    end
 
     def log_success(options, params:, **)
       LOGGER.info "[#{self.class}] Deleted device with params #{params.to_json}."

@@ -5,7 +5,7 @@ require './config/logging.rb'
 require './config/authorize.rb'
 require './config/database.rb'
 require './config/concepts.rb'
-
+require './config/redis.rb'
 
 set :bind, '0.0.0.0'
 set :port, 80
