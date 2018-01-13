@@ -21,7 +21,7 @@ class Device < Sequel::Model(DB)
     end
 
     def log_success(options, params:, model:, **)
-      LOGGER.info "[#{self.class}] Found devices for house #{params.to_json}. Devices: #{Device::Representer.new(options['model']).to_json}"
+      LOGGER.info "[#{self.class}] Found devices for house #{params.to_json}. Devices: #{Device::Representer.for_collection.new(result['models']).to_json}"
     end
 
     def log_failure(options, params:, **)
